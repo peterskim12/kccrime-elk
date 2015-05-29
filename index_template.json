@@ -1,0 +1,79 @@
+{
+    "template" : "kccrime*",
+    "settings" : {
+      "index.refresh_interval" : "5s",
+      "number_of_shards" : 3,
+      "number_of_replicas" : 0
+    },
+    "mappings" : {
+      "_default_" : {
+        "dynamic_templates" : [ {
+          "string_fields" : {
+            "mapping" : {
+              "index" : "not_analyzed",
+      			  "type": "string",
+      			  "doc_values": true,
+              "norms" : {
+                "enabled" : false
+              }
+            },
+            "match_mapping_type" : "string",
+            "match" : "*"
+          }
+        } ],
+        "properties" : {
+          "@timestamp" : {
+            "type" : "date",
+            "doc_values": true
+          },
+          "from_timestamp" : {
+            "type" : "date",
+            "doc_values": true
+          },
+          "to_timestamp" : {
+            "type" : "date",
+            "doc_values": true
+          },
+          "reported_timestamp" : {
+            "type" : "date",
+            "doc_values": true
+          },
+    		  "description": {
+    			  "type": "string",
+    			  "index": "analyzed",
+    			  "fields": {
+    				  "raw": {
+    					  "type": "string",
+    					  "index": "not_analyzed",
+    					  "doc_values": true
+    				  }
+    			  }
+    		  },
+    		  "address": {
+    			  "type": "string",
+    			  "index": "analyzed",
+    			  "fields": {
+    				  "raw": {
+    					  "type": "string",
+    					  "index": "not_analyzed",
+    					  "doc_values": true
+    				  }
+    			  }
+    		  },
+          "coords" : {
+            "type" : "geo_point",
+            "doc_values": true
+          },
+          "@version" : {
+            "index" : "not_analyzed",
+            "type" : "string",
+            "doc_values": true
+          }
+        },
+        "_all" : {
+          "enabled" : true
+        }
+      },
+    "aliases" : { }
+}
+}
